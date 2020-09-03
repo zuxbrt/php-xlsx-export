@@ -1,0 +1,6 @@
+host=localhost
+username=root
+password=root
+socket_path=
+database=databasename
+tables=table1,table2,table3
