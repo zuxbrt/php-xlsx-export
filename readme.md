@@ -18,4 +18,4 @@ php version: 7.2.33
 > php index.php --help
 
 
-Comments, tests and more detailed documentation - TODO :pencil: :construction:.
+Code comments :sweat_smile: , tests and more detailed documentation - TODO :pencil: :construction:.
