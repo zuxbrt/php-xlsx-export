@@ -7,7 +7,6 @@ class Parser
 {
     public function execute($commands)
     {
-        die(print_r($commands));
         session_start();
         // example command
         // php index.php --host=localhost --username=root --password=root --socket=false --database=databasename --tables=table1,table2,table3
