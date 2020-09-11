@@ -1,0 +1,10 @@
+#!/usr/bin/env php
+<?php
+
+define('SCRIPT_START', microtime(true));
+include(__DIR__.'/Parser.php');
+
+$parser = new Parser();
+$parser->execute($argv);
+
+exit(200);
