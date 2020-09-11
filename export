@@ -1,4 +1,4 @@
-#!/usr/bin/env php
+#! todo
 <?php
 
 define('SCRIPT_START', microtime(true));
