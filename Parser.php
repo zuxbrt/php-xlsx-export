@@ -5,14 +5,35 @@ use Script\Export as Export;
 
 class Parser
 {
+    public $helpmessage = 
+    'Required parameters:
+        --host               - host url (example: --host=localhost)
+        --database           - database name (example: --database=databasename)
+        --username           - mysql username (example: --username=root)
+        --password           - mysql username (example: --password=root)
+        --tables             - tables that will be exported: (example: --tables=users,messages)
+        --socket             - is unix socket used for mysql connection (example: --socket=true / --socket=false)
+        --socket_path        - provide socket path (example: --socket_path=/Applications/MAMP/tmp/mysql/mysql.sock)
+    Example command:
+        php export --host=localhost --username=root --password=root --socket=false --socket_path=/Applications/MAMP/tmp/mysql/mysql.sock --database=licences --tables=users,licences,messages
+        ';
+
     public function execute($commands)
     {
         session_start();
         // example command
-        // php index.php --host=localhost --username=root --password=root --socket=false --database=databasename --tables=table1,table2,table3
+        // php export --host=localhost --username=root --password=root --socket=false --database=databasename --tables=table1,table2,table3
 
         // example socket path
         // /Applications/MAMP/tmp/mysql/mysql.sock
+
+        // check if help command is called to return help message right away
+        if(count($commands) > 0){
+            if($commands[1] == '--help'){
+                echo $this->helpmessage;
+                return;
+            }
+        }
 
         $file_exists = file_exists(__DIR__.'/config.txt');
 
@@ -103,18 +124,18 @@ class Parser
         } else {
 
             if(count($commands) <= 1){
-                echo PHP_EOL.'No configuration file found. Create a new one or run export via terminal. Run php index.php --help to list commands.'.PHP_EOL.PHP_EOL;
+                echo PHP_EOL.'No configuration file found. Create a new one or run export via terminal. Run php export --help to list commands.'.PHP_EOL.PHP_EOL;
                 return;
             }
             
             $commands = ['--host', '--database', '--username', '--password', '--tables', '--socket', '--socket_path', '--help'];
             
             foreach($commands as $argument){
-                if($argument !== 'index.php'){
+                if($argument !== 'export'){
             
                     $param = explode('=', $argument);
                     if(!in_array($param[0], $commands)){
-                        echo PHP_EOL.'Unknown command. Run php index.php --help to list commands.'.PHP_EOL.PHP_EOL;
+                        echo PHP_EOL.'Unknown command. Run php export --help to list commands.'.PHP_EOL.PHP_EOL;
                         return;
                     }
             
@@ -124,7 +145,7 @@ class Parser
                                 $host = $param[1];
                                 break;
                             } else {
-                                echo 'Missing host url. Run php index.php --help to see an example'.PHP_EOL;
+                                echo 'Missing host url. Run php export --help to see an example'.PHP_EOL;
                             }
                         
                         case '--database':
@@ -132,7 +153,7 @@ class Parser
                                 $database = $param[1];
                                 break;
                             } else {
-                                echo 'Missing database name. Run php index.php --help to see an example'.PHP_EOL;
+                                echo 'Missing database name. Run php export --help to see an example'.PHP_EOL;
                             }
             
                         case '--username':
@@ -140,7 +161,7 @@ class Parser
                                 $username = $param[1];
                                 break;
                             } else {
-                                echo 'Missing username. Run php index.php --help to see an example'.PHP_EOL;
+                                echo 'Missing username. Run php export --help to see an example'.PHP_EOL;
                             }
             
                         case '--password':
@@ -148,7 +169,7 @@ class Parser
                                 $password = $param[1];
                                 break;
                             } else {
-                                echo 'Missing password. Run php index.php --help to see an example'.PHP_EOL;
+                                echo 'Missing password. Run php export --help to see an example'.PHP_EOL;
                             }
             
                         case '--socket':
@@ -156,7 +177,7 @@ class Parser
                                 $uses_socket = ($param[1] == 'true') ? true : false;
                                 break;
                             } else {
-                                echo 'Missing is using socket(true/false). Run php index.php --help to see an example'.PHP_EOL;
+                                echo 'Missing is using socket(true/false). Run php export --help to see an example'.PHP_EOL;
                             }
             
                         case '--socket_path':
@@ -164,7 +185,7 @@ class Parser
                                 $socket_path = $param[1];
                                 break;
                             } else {
-                                echo 'Missing socket path. Run php index.php --help to see an example'.PHP_EOL;
+                                echo 'Missing socket path. Run php export --help to see an example'.PHP_EOL;
                             }
                     
                         case '--tables':
@@ -189,17 +210,7 @@ class Parser
                             break;
             
                         case '--help':
-                            echo PHP_EOL.'Required parameters:'.PHP_EOL;
-                            echo '--host               - host url (example: --host=localhost)'.PHP_EOL;
-                            echo '--database           - database name (example: --database=databasename)'.PHP_EOL;
-                            echo '--username           - mysql username (example: --username=root)'.PHP_EOL;
-                            echo '--password           - mysql username (example: --password=root)'.PHP_EOL;
-                            echo '--tables             - tables that will be exported: (example: --tables=users,messages)'.PHP_EOL;
-                            echo '--socket             - is unix socket used for mysql connection (example: --socket=true / --socket=false)'.PHP_EOL;
-                            echo '--socket_path        - provide socket path (example: --socket_path=/Applications/MAMP/tmp/mysql/mysql.sock)'.PHP_EOL;
-                            echo PHP_EOL.'Example command:'.PHP_EOL;
-                            echo 'php index.php --host=localhost --username=root --password=root --socket=false --socket_path=/Applications/MAMP/tmp/mysql/mysql.sock --database=licences --tables=users,licences,messages'.PHP_EOL.PHP_EOL;
-                            return;
+                            return $this->helpmessage;
                         
                         default:
                             echo 'Unknown command.'.PHP_EOL;
@@ -211,7 +222,7 @@ class Parser
             }
             
             if(count($export_tables) < 1 || $database == null || $username == null || $password == null || $uses_socket = null || $host = null){
-                echo PHP_EOL.'Missing required parameters. Run php index.php --help to see an example'.PHP_EOL;
+                echo PHP_EOL.'Missing required parameters. Run php export --help to see an example'.PHP_EOL;
                 return;
             }
             

@@ -8,7 +8,7 @@ php version: 7.2.33
 ## Usage:
 
 ### Via command line: 
-> php index.php --host=localhost --username=root --password=root --socket=false --database=databasename --tables=table1,table2,table3
+> php export --host=localhost --username=root --password=root --socket=false --database=databasename --tables=table1,table2,table3
 
 ### Via config file:
 > php index.php
