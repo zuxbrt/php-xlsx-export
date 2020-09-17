@@ -10,7 +10,7 @@ use PDOException;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-class Export
+class ExcelExport
 {
     protected $connect;
     protected $export_tables;

@@ -1,7 +1,7 @@
 <?php
 
 include('../php-xlsx-export/Script/export.php');
-use Script\Export;
+use Script\ExcelExport;
 
 // example command
 // php export --host=localhost --username=root --password=root --socket=false --database=databasename --tables=table1,table2,table3
