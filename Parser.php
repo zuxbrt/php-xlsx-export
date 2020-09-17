@@ -1,7 +1,13 @@
 <?php
 
 include('../php-xlsx-export/Script/export.php');
-use Script\Export as Export;
+use Script\Export;
+
+// example command
+// php export --host=localhost --username=root --password=root --socket=false --database=databasename --tables=table1,table2,table3
+
+// example socket path
+// /Applications/MAMP/tmp/mysql/mysql.sock
 
 class Parser
 {
@@ -21,11 +27,6 @@ class Parser
     public function execute($commands)
     {
         session_start();
-        // example command
-        // php export --host=localhost --username=root --password=root --socket=false --database=databasename --tables=table1,table2,table3
-
-        // example socket path
-        // /Applications/MAMP/tmp/mysql/mysql.sock
 
         // check if help command is called to return help message right away
         if(count($commands) > 0){
